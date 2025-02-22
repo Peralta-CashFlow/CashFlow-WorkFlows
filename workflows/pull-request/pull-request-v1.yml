@@ -1,0 +1,15 @@
+name: Pull Request - Workflows Repository
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  conventional-commits:
+    name: Conventional Commit Validation
+    uses: ./.github/workflows/base/conventional-commit-v1.yml
+    permissions:
+      contents: read
+      pull-requests: write 
+    with:
+      repository: ${{ github.repository }}

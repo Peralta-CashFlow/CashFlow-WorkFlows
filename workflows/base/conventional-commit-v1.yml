@@ -1,0 +1,71 @@
+name: Conventional Commit Validation
+
+on:
+  workflow-call:
+
+jobs:
+  commit-validation:
+    name: Conventional Commit Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate commit messages
+        id: commit-validation
+        run: |
+          
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          REPO=${{ github.repository }}
+          TOKEN=${{ secrets.GITHUB_TOKEN }}
+
+          types=("build" "chore" "ci" "docs" "feat" "fix" "perf" "refactor" "revert" "style" "test")
+          
+          commits=$(curl -s -H "Authorization: token $TOKEN" \
+            "https://api.github.com/repos/$REPO/pulls/$PR_NUMBER/commits" \
+            | jq -r '.[].commit.message')
+          
+          commitIsValid=true
+
+          while IFS= read -r commit; do
+            if [[ "$commit" == *": "* ]]; then
+
+              echo "Commit message: $commit"
+              
+              type=$(echo "$commit" | awk -F': ' '{print $1}')
+              if [[ ! " ${types[*]} " == *" $type "* ]]; then
+                echo "Type is not a valid one."
+                commitIsValid=false
+              fi
+              
+              message=$(echo "$commit" | awk -F': ' '{print $2}')
+              if ! echo "$message" | grep -Eq '^[a-z ]+$'; then
+                echo "Message contains characters that are not space or lower case letters."
+                commitIsValid=false
+              elif [[ ${#message} -gt 50 ]]; then
+                echo "Message contains more than 50 characters."
+                commitIsValid=false
+              fi
+            
+            else
+              echo "Commit message does not contain ': ' -> $commit"
+              commitIsValid=false    
+            fi            
+          done <<< "$commits"
+
+          echo "commitIsValid=$commitIsValid" >> $GITHUB_ENV
+
+      - name: Handle Commits Validation
+        run: |
+          if [[ "$commitIsValid" == "false" ]]; then
+            gh pr close ${{ github.event.pull_request.number }} --repo ${{ github.repository }} --comment "## **❌ Commit(s) Invalid ❌**
+            All commits should follow [Conventional Commits](https://www.conventionalcommits.org/pt-br/v1.0.0/) standard.
+            
+            Update your commits messages and push again. 🚀"
+            exit 1
+          else
+            gh pr comment ${{ github.event.pull_request.number }} --repo ${{ github.repository }} --body "## **✅ Commit(s) are Valid ✅**.
+            All the commits follow conventional commits pattern, PR not closed."
+          fi
+        env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

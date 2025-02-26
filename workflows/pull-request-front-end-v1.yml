@@ -1,4 +1,4 @@
-name: Pull Request - Workflows Repository
+name: Pull Request - Front-End Repositories
 
 on:
   workflow-call:

@@ -3,6 +3,8 @@ name: Pull Request - Workflows Repository
 on:
   pull_request:
     types: [opened, synchronize, reopened]
+    branches:
+      - main
 
 jobs:
   conventional-commits:
@@ -11,5 +13,3 @@ jobs:
     permissions:
       contents: read
       pull-requests: write 
-    with:
-      repository: ${{ github.repository }}

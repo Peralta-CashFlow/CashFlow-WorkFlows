@@ -1,7 +1,7 @@
 name: Conventional Commit Validation
 
 on:
-  workflow-call:
+  workflow_call:
 
 jobs:
   commit-validation:

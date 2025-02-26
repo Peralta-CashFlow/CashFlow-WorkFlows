@@ -1,0 +1,23 @@
+name: Pull Request - Back-End Repositories
+
+on:
+  workflow-call:
+    inputs:
+      sonar_project_key:
+        description: 'SonarQube Project Key'
+        required: false
+        type: string
+
+jobs:
+  conventional-commits:
+    name: Conventional Commit Validation
+    uses: ./.github/workflows/conventional-commit-v1.yml
+    permissions:
+      contents: read
+      pull-requests: write 
+
+  sonar-analysis:
+    name: Sonar Analysis
+    uses: ./.github/workflows/sonar-analysis-v1.yml
+    with:
+      sonar_project_key: ${{ inputs.sonar_project_key }}

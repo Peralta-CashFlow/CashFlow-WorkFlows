@@ -1,7 +1,7 @@
 name: Pull Request - Front-End Repositories
 
 on:
-  workflow-call:
+  workflow_call:
 
 jobs:
   conventional-commits:

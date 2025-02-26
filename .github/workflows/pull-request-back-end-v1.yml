@@ -1,7 +1,7 @@
 name: Pull Request - Back-End Repositories
 
 on:
-  workflow-call:
+  workflow_call:
     inputs:
       sonar_project_key:
         description: 'SonarQube Project Key'

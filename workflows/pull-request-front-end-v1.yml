@@ -1,0 +1,12 @@
+name: Pull Request - Workflows Repository
+
+on:
+  workflow-call:
+
+jobs:
+  conventional-commits:
+    name: Conventional Commit Validation
+    uses: ./.github/workflows/base/conventional-commit-v1.yml
+    permissions:
+      contents: read
+      pull-requests: write 

@@ -21,7 +21,7 @@ The workflow ["_sonar-analysis.v1.yml_"](https://github.com/Peralta-CashFlow/Cas
 
 The workflow ["_conventional-commit-v1.yml_"](https://github.com/Peralta-CashFlow/CashFlow-WorkFlows/blob/main/.github/workflows/conventional-commit-v1.yml) is responsible for scanning a Pull Request commits and verify if all of them are following [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) standards.
 
-If all commits are fine you will be able to merge your PR, if not it will automatically close the PR.
+If all commits are fine you will be able to merge your PR, if not it will fail the workflow.
 
 ## Deploy on GitHub Pages - React
 

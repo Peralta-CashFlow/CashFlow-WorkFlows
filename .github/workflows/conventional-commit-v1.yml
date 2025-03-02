@@ -58,7 +58,7 @@ jobs:
       - name: Handle Commits Validation
         run: |
           if [[ "$commitIsValid" == "false" ]]; then
-            gh pr close ${{ github.event.pull_request.number }} --repo ${{ github.repository }} --comment "## **❌ Commit(s) Invalid ❌**
+            gh pr comment ${{ github.event.pull_request.number }} --repo ${{ github.repository }} --body "## **❌ Commit(s) Invalid ❌**
             All commits should follow [Conventional Commits](https://www.conventionalcommits.org/pt-br/v1.0.0/) standard.
             
             Update your commits messages and push again. 🚀"

@@ -1,0 +1,52 @@
+name: Check Library Deploy Label
+
+on:
+  workflow_call:
+
+jobs:
+  check-deploy-libs:
+    name: Validate Deploy Labels
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Check Labels
+        id: check-labels
+        run: |
+
+          PR_NUMBER=${{ github.event.pull_request.number }}
+          REPO=${{ github.repository }}
+          TOKEN=${{ secrets.GITHUB_TOKEN }}
+        
+          labels=$(curl -s -H "Authorization: token $TOKEN" \
+            "https://api.github.com/repos/$REPO/pulls/$PR_NUMBER" \
+            | jq -r '.labels // [] | map(.name)')
+
+          filteredLabels=$(echo "$labels" | jq -r 'map(select(startswith("Deploy - ")))')
+
+          deployIsValid=true
+
+          if [ "$filteredLabels" == "[]" ]; then
+            echo "No deploy label selected."
+            deployIsValid=false
+          elif [ $(echo "$filteredLabels" | jq length) -gt 1 ]; then
+            echo "More than one deploy label selected."
+            deployIsValid=false
+          else 
+            lib=$(echo "$filteredLabels" | jq -r '.[0]' | sed 's/^Deploy - //')
+            echo "lib=$lib" >> $GITHUB_ENV
+          fi
+
+          echo "deployIsValid=$deployIsValid" >> $GITHUB_ENV
+
+      - name: Handle Labels Validation
+        run: |
+          if [[ "$deployIsValid" == "false" ]]; then
+            gh pr comment ${{ github.event.pull_request.number }} --repo ${{ github.repository }} --body "## **❌ Deploy Lib Invalid ❌**
+            You should select **ONE** Deploy label to update the library."
+            exit 1
+          else
+            gh pr comment ${{ github.event.pull_request.number }} --repo ${{ github.repository }} --body "## **✅ Deploy Lib Valid ✅**.
+            By merging this Pull Request you will update **$lib** library."
+          fi
+        env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

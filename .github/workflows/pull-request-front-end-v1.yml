@@ -7,6 +7,3 @@ jobs:
   conventional-commits:
     name: Conventional Commit Validation
     uses: ./.github/workflows/conventional-commit-v1.yml
-    permissions:
-      contents: read
-      pull-requests: write 

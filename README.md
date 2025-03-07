@@ -27,6 +27,10 @@ If all commits are fine you will be able to merge your PR, if not it will fail t
 
 The workflow ["_deploy-front-end-v1.yml_"](https://github.com/Peralta-CashFlow/CashFlow-WorkFlows/blob/main/.github/workflows/deploy-front-end-v1.yml) is responsible for building and deploying React code on [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages). It will automatically update the branch "_deploy_" that will be linked with GitHub pages.
 
+## Deploy Java Packages
+
+The workflow ["_java-packages-deploy-v1.yml_"](https://github.com/Peralta-CashFlow/CashFlow-WorkFlows/blob/main/.github/workflows/java-packages-deploy-v1.yml) is responsible for automatically deploying Java packages to [Github Packages](https://docs.github.com/en/packages/learn-github-packages/introduction-to-github-packages).
+
 # Configuring a new Java Project
 
 For Back-End **Java** repositories we will configure Sonar and Conventional Commits validation on Pull Requests. 

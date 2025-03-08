@@ -30,7 +30,7 @@ jobs:
       - name: maven-settings
         uses: s4u/maven-settings-action@v3.1.0
         with:
-          servers: '[{"id": "cashflow", "username": "Packages Install", "password": "${{ secrets.GITHUB_TOKEN_REF }}"}]'
+          servers: '[{"id": "cashflow", "username": "Packages Install", "password": "${{ secrets.TOKEN_GITHUB_PACKAGES }}"}]'
       - name: Run Sonar Analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

@@ -32,8 +32,8 @@ jobs:
         with:
           servers: '[{"id": "cashflow", "username": "Packages Install", "password": "${{ secrets.TOKEN_GITHUB_PACKAGES }}"}]'
           githubServer: false
-      - name: List .m2 directory
-        run: ls -la ~/.m2
+      - name: Show contents of settings.xml
+        run: cat ~/.m2/settings.xml
       - name: Run Sonar Analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

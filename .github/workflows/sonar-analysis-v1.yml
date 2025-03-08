@@ -30,8 +30,10 @@ jobs:
       - name: maven-settings
         uses: s4u/maven-settings-action@v3.1.0
         with:
-          servers: '[{"id": "cashflow", "username": "Packages Install", "password": "${{ secrets.TOKEN_GITHUB_PACKAGES }}"}]'
+          servers: '[{"id": "cashflow", "username": "Packages Install", "password": "${GITHUB_TOKEN_REF}"}]'
+          githubServer: false
       - name: Run Sonar Analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          GITHUB_TOKEN_REF: ${{ secrets.TOKEN_GITHUB_PACKAGES }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=${{ inputs.sonar_project_key }}

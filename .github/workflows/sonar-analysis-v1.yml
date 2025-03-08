@@ -30,7 +30,7 @@ jobs:
       - name: maven-settings
         uses: s4u/maven-settings-action@v3.1.0
         with:
-          servers: '[{"id": "cashflow", "username": "Packages Install", "password": "${{ secrets.TOKEN_GITHUB_PACKAGES }}"}]'
+          servers: '[{"id": "cashflow", "username": "Packages Install", "password": "123"}]'
           githubServer: false
       - name: Show contents of settings.xml
         run: cat ~/.m2/settings.xml

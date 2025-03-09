@@ -35,7 +35,8 @@ jobs:
       - name: debugging
         run: | 
           cat ~/.m2/settings.xml
-          echo ${{ secrets.TOKEN_GITHUB_PACKAGES }}
+          echo "${{ secrets.TOKEN_GITHUB_PACKAGES }}"
+          echo "${{ secrets.TEST }}"
       - name: Run Sonar Analysis
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

@@ -72,6 +72,7 @@ jobs:
             pull-requests: write 
         with:
             sonar_project_key: <PROJECT_KEY_FROM_SONAR_CLOUD>
+	secrets: inherit
 ```
 
 4 - Request Architecture team to protect main branch;

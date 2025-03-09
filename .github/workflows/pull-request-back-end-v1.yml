@@ -19,3 +19,6 @@ jobs:
     needs: conventional-commits
     with:
       sonar_project_key: ${{ inputs.sonar_project_key }}
+    secrets:
+      TOKEN_GITHUB_PACKAGES: ${{ secrets.TOKEN_GITHUB_PACKAGES }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

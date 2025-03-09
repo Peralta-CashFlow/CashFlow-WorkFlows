@@ -7,6 +7,13 @@ on:
         description: 'SonarQube Project Key'
         required: true
         type: string
+    secrets:
+      SONAR_TOKEN:
+        description: 'Sonar token for analysis'
+        required: true
+      TOKEN_GITHUB_PACKAGES:
+        description: 'GitHub Packages download token'
+        required: true
 
 jobs:
   build:

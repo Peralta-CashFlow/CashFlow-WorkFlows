@@ -41,7 +41,7 @@ For Back-End **Java** repositories we will configure Sonar and Conventional Comm
 
 2 - Request Architecture team to configure the repository on [SonarCloud](https://sonarcloud.io/organizations/peralta-cashflow/);
 
-2 - Add on the project pom.xml under properties the bellow configuration:
+3 - Add on the project pom.xml under properties the bellow configuration:
 
 ```xml
 <properties>
@@ -49,10 +49,63 @@ For Back-End **Java** repositories we will configure Sonar and Conventional Comm
 	<sonar.organization>peralta-cashflow</sonar.organization>
 	<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	<sonar.qualitygate.wait>true</sonar.qualitygate.wait>
+        <sonar.language>java</sonar.language>
+        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+        <sonar.qualitygate.wait>true</sonar.qualitygate.wait>
+        <sonar.exclusions>
+            .github,
+            **/Application.java,
+            **/test/**
+        </sonar.exclusions>
 </properties>
 ```
 
-3 - Add ["_pull-request-back-end-v1_"](https://github.com/Peralta-CashFlow/CashFlow-WorkFlows/blob/main/.github/workflows/pull-request-back-end-v1.yml) on the project .github/workflows folder:
+4 - Still on pom.xml you should add Jacoco dependencies and build:
+
+```xml
+	<!-- Jacoco -->
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>org.jacoco.agent</artifactId>
+            <version>0.8.12</version>
+            <scope>test</scope>
+        </dependency>
+
+     <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.12</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+```
+
+5 - Add ["_pull-request-back-end-v1_"](https://github.com/Peralta-CashFlow/CashFlow-WorkFlows/blob/main/.github/workflows/pull-request-back-end-v1.yml) on the project .github/workflows folder:
 
 ```yml
 name: Pull Request - Java Back End

@@ -4,6 +4,16 @@ This repository is a center point for all CashFlow workflows, here we have reusa
 
 Centralizing the workflows will make it easier for maintenance and problem resolution as we will only need to update the files here and it will be reflected in all other repositories.
 
+# Summary
+
+- [Workflows](#workflows)
+  - [Sonar - Java](#sonar---java)
+  - [Conventional Commit](#conventional-commit)
+  - [Deploy on GitHub Pages - React](#deploy-on-github-pages---react)
+  - [Deploy Java Packages](#deploy-java-packages)
+- [Configuring a new Java Project](#configuring-a-new-java-project)
+- [Configuring a new React Project](#configuring-a-new-react-project)
+
 # Workflows
 
 Let's se all the available workflows, check what they are responsible for and understand how to use it.

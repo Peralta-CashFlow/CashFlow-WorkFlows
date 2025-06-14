@@ -18,7 +18,9 @@ on https://www.jenkins.io/download/.
 
 Install recommended Jenkins plugins and create the first administrative user.
 
-Go to _Manage Jenkins -> Tools -> Maven_ and add Maven 3.9.10.
+Go to _Manage Jenkins -> Tools -> Maven Installations_ and add Maven version 3.9.10 as "3.9.10".
+
+Go to _Manage Jenkins -> Tools -> JDK Installations -> Add JDK_ and add your JDK version 21 with name "JDK21".
 
 With that you are ready to use Jenkins.
 

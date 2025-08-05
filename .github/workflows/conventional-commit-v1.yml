@@ -19,19 +19,18 @@ jobs:
 
           types=("build" "chore" "ci" "docs" "feat" "fix" "perf" "refactor" "revert" "style" "test")
           
-          mapfile -t commits < <(
-            curl -s -H "Authorization: token $TOKEN" \
-              "https://api.github.com/repos/$REPO/pulls/$PR_NUMBER/commits" \
-              | jq -r '.[].commit.message'
-          )
+          commits=$(curl -s -H "Authorization: token $TOKEN" \
+            "https://api.github.com/repos/$REPO/pulls/$PR_NUMBER/commits" \
+            | jq -r '.[].commit.message' | @base64)
           
           commitIsValid=true
 
           echo "Going to validate commits message.."
-          echo "Commits found: ${commits[@]}"
 
-          for commit in "${commits[@]}"; do
+          while IFS= read -r encoded; do
           
+            commit=$(echo "$encoded" | base64 --decode)
+        
             if [[ "$commit" == "Merge pull request"* ]]; then
               echo "Ignoring merge commit: $commit"
               continue
@@ -58,9 +57,9 @@ jobs:
             
             else
               echo "Commit message does not contain ': ' -> $commit"
-              commitIsValid=false
+              commitIsValid=false    
             fi            
-          done
+          done <<< "$commits"
 
           echo "commitIsValid=$commitIsValid" >> $GITHUB_ENV
 

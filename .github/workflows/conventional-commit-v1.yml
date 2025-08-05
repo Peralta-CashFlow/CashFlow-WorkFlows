@@ -26,6 +26,12 @@ jobs:
           commitIsValid=true
 
           while IFS= read -r commit; do
+
+            if [[ "$commit" == Merge\ pull\ request* ]]; then
+              echo "Ignoring merge commit: $commit"
+              continue
+            fi
+      
             if [[ "$commit" == *": "* ]]; then
 
               echo "Commit message: $commit"

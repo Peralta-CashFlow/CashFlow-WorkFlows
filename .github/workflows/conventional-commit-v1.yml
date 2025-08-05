@@ -21,7 +21,7 @@ jobs:
           
           commits=$(curl -s -H "Authorization: token $TOKEN" \
             "https://api.github.com/repos/$REPO/pulls/$PR_NUMBER/commits" \
-            | jq -r '.[].commit.message' | @base64)
+            | jq -r '.[].commit.message | @base64')
           
           commitIsValid=true
 

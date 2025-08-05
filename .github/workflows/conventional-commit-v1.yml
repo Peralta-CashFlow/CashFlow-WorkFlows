@@ -27,6 +27,8 @@ jobs:
 
           while IFS= read -r commit; do
 
+            echo: "Testing.."
+
             if [[ "$commit" == "Merge pull request"* ]]; then
               echo "Ignoring merge commit: $commit"
               continue

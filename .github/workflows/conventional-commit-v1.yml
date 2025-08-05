@@ -28,11 +28,6 @@ jobs:
           echo "Going to validate commits message.."
 
           while IFS= read -r commit; do
-        
-            if [[ "$commit" == "Merge pull request"* ]]; then
-              echo "Ignoring merge commit: $commit"
-              continue
-            fi
       
             if [[ "$commit" == *": "* ]]; then
 
@@ -54,8 +49,12 @@ jobs:
               fi
             
             else
-              echo "Commit message does not contain ': ' -> $commit"
-              commitIsValid=false    
+              if [[ "$commit" == "Merge pull request"* ]]; then
+                echo "Ignoring merge commit: $commit"
+              else
+                echo "Commit message does not contain ': ' -> $commit"
+                commitIsValid=false
+              fi
             fi            
           done <<< "$commits"
 

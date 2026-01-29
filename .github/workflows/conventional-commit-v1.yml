@@ -31,7 +31,7 @@ jobs:
           
             commit=$(echo "$encoded" | base64 --decode)
         
-            if [[ "$commit" == "Merge pull request"* ]]; then
+            if [[ "$commit" == "Merge pull request"* || "$commit" == "Merge branch"* ]]; then
               echo "Ignoring merge commit: $commit"
               continue
             fi

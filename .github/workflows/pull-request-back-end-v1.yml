@@ -7,6 +7,14 @@ on:
         description: 'SonarQube Project Key'
         required: true
         type: string
+      java_version:
+        description: 'Java Version'
+        required: true
+        type: string
+      java_distribution:
+        description: 'Java Distribution'
+        required: true
+        type: string
 
 jobs:
   conventional-commits:
@@ -19,6 +27,8 @@ jobs:
     needs: conventional-commits
     with:
       sonar_project_key: ${{ inputs.sonar_project_key }}
+      java_version: ${{ inputs.java_version }}
+      java_distribution: ${{ inputs.java_distribution }}
     secrets:
       TOKEN_GITHUB_PACKAGES: ${{ secrets.TOKEN_GITHUB_PACKAGES }}
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

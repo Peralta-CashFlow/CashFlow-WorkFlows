@@ -7,6 +7,14 @@ on:
         description: 'SonarQube Project Key'
         required: true
         type: string
+      java_version:
+        description: 'Java Version'
+        required: true
+        type: string
+      java_distribution:
+        description: 'Java Distribution'
+        required: true
+        type: string
     secrets:
       SONAR_TOKEN:
         description: 'Sonar token for analysis'
@@ -26,8 +34,8 @@ jobs:
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: 21
-          distribution: 'zulu'
+          java-version: ${{ inputs.java_version }}
+          distribution: ${{ inputs.java_distribution }}
       - name: Sonar Cache
         uses: actions/cache@v4
         with:
